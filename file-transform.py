@@ -20,26 +20,26 @@ def transform_file(file_path):
     return combined_features
 
 
-features = []
-labels = []
-file_names = []
 
-folder_path = "music_samples"
+def loadData(folder_path):
+    features = []
+    labels = []
+    file_names = []
 
-for current_folder, sub_folder, files in os.walk(folder_path):
-    for file in files:
-        
-        file_path = os.path.join(current_folder, file)
-        parent_directory = os.path.dirname(file_path)
+    for current_folder, _, files in os.walk(folder_path):
+        for file in files:
+            
+            file_path = os.path.join(current_folder, file)
+            parent_directory = os.path.dirname(file_path)
 
-        features.append(transform_file(file_path))
+            features.append(transform_file(file_path))
 
-        labels.append(parent_directory.split('/')[1].split('_')[0])
+            labels.append(parent_directory.split('/')[1].split('_')[0])
 
-        file_names.append(file)
+            file_names.append(file)
 
-X = np.array(features)
-y = np.array(labels)
+    return np.array(features), np.array(labels), file_names
+
 
 
 # ======================================= PCA ==============================================
@@ -50,8 +50,11 @@ y = np.array(labels)
 '''
 
 # PCA requires min(n_samples, n_features), but for KNN n_components=200 would be a better fit.
-pca = PCA(n_components=min(X.shape[0], X.shape[1])) 
-X_reduced = pca.fit_transform(X)
+def reduce_dimensions(X, n_comp=0):
+    n_components = n_comp if n_comp > 0 else min(X.shape[0], X.shape[1])
+    pca = PCA(n_components=n_components)
+    X_reduced = pca.fit_transform(X)
+    return X_reduced
 
 # ==========================================================================================
 
@@ -67,6 +70,12 @@ def printFileData(X, y):
     print(f"\nEtykiety: {y}\n")
 
 
-printFileData(X, y)
-print("="*50, "REDUCED", "="*50)
-printFileData(X_reduced, y)
+
+
+if __name__ == "__main__":
+    X, y, file_names = loadData(folder_path = "music_samples")
+    X_reduced = reduce_dimensions(X)
+
+    printFileData(X, y)
+    print("="*50, "REDUCED", "="*50)
+    printFileData(X_reduced, y)
