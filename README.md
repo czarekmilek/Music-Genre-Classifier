@@ -26,28 +26,26 @@
 
 ### 4. Install other packages:
 
-#### _For YouTube audio download_:
-
-> brew install ffmpeg (macOS)
-
-## Terminal commands
-
-### Install FFmpeg 📦
+#### Install FFmpeg 📦
 
 To use `yt-dlp` for downloading and extracting audio, FFmpeg must be installed on your system. Follow the instructions for your operating system:
 
-#### macOS (via Homebrew)
+##### macOS (via Homebrew)
 
 > brew install ffmpeg
 
-#### Linux (Ubuntu/Debian-based)
+##### Linux (Ubuntu/Debian-based)
 
 > sudo apt update
 > sudo apt install ffmpeg
 
-#### Windows
+##### Windows
 
 1. Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/download.html).
 2. Extract the archive and add the `bin` folder to your system's PATH.
+
+## Terminal commands
+
+### Download YouTube Playlist:
 
 > yt-dlp -x --audio-format mp3 -o "DIRECTORY_FOLDER_NAME/%(title)s.%(ext)s" "PLAYLIST_LINK"
