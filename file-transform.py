@@ -20,28 +20,26 @@ def transform_file(file_path):
     return combined_features
 
 
-X = np.array([])
-y = np.array([]) 
-folder_path = "music_samples"
+features = []
+labels = []
 file_names = []
+
+folder_path = "music_samples"
 
 for current_folder, sub_folder, files in os.walk(folder_path):
     for file in files:
-        file_path = os.path.join(current_folder, file) 
+        
+        file_path = os.path.join(current_folder, file)
         parent_directory = os.path.dirname(file_path)
 
-        new_arr = transform_file(file_path)
+        features.append(transform_file(file_path))
 
-        if X.size == 0:
-            X = new_arr.reshape(1, -1)
-        else:
-            X = np.vstack([X, new_arr]) 
+        labels.append(parent_directory.split('/')[1].split('_')[0])
 
-        y = np.append(y, parent_directory.split('/')[1].split('_')[0]) # adding labels to y
         file_names.append(file)
 
-
-
+X = np.array(features)
+y = np.array(labels)
 
 
 # ======================================= PCA ==============================================
