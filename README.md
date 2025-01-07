@@ -28,7 +28,7 @@
 
 #### _For YouTube audio download_:
 
-> > brew install ffmpeg (macOS)
+> brew install ffmpeg (macOS)
 
 ## Terminal commands
 
@@ -50,4 +50,4 @@ To use `yt-dlp` for downloading and extracting audio, FFmpeg must be installed o
 1. Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/download.html).
 2. Extract the archive and add the `bin` folder to your system's PATH.
 
-> yt-dlp -x --audio-format mp3 -o "classic_folder/%(title)s.%(ext)s" "PLAYLIST_LINK"
+> yt-dlp -x --audio-format mp3 -o "DIRECTORY_FOLDER_NAME/%(title)s.%(ext)s" "PLAYLIST_LINK"
