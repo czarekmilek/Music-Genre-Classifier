@@ -41,8 +41,8 @@ To use `yt-dlp` for downloading and extracting audio, FFmpeg must be installed o
 
 ##### Windows
 
-1. Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/download.html).
-2. Extract the archive and add the `bin` folder to your system's PATH.
+> 1. Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/download.html).
+> 2. Extract the archive and add the `bin` folder to your system's PATH.
 
 ## Terminal commands
 
