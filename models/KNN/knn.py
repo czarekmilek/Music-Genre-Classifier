@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, f1_score, recall_score, precision_score
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.decomposition import PCA
 import pandas as pd
@@ -43,10 +43,14 @@ def knn_classify(df_music, n_neighbors=7):
     print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
     accuracy = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average='macro')
+    recall = recall_score(y_test, y_pred, average='macro')
+    precision = precision_score(y_test, y_pred, average='macro')
+
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy:.4f}")
 
-    return accuracy
+    return accuracy, f1, precision, recall
 
 if __name__ == "__main__":
     # Load the dataset

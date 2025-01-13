@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
 from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 from sklearn.decomposition import PCA
@@ -27,14 +27,19 @@ def svm_classify(df_music):
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
+
     accuracy = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average='macro')
+    precision = precision_score(y_test, y_pred, average='macro')
+    recall = recall_score(y_test, y_pred, average='macro')
+
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
 
-    return accuracy
+    return accuracy, f1, precision, recall
 
 
 if __name__ == "__main__":

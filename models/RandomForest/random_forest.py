@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, accuracy_score
+from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
 from sklearn.preprocessing import LabelEncoder
 
 import pandas as pd
@@ -43,13 +43,17 @@ def random_forest_classify(df_music):
     rf.fit(X_train, y_train)
         
     y_pred = rf.predict(X_test)
-    score = accuracy_score(y_test, y_pred)
+    accuracy = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred, average='macro')
+    recall = recall_score(y_test, y_pred, average='macro')
+    precision = precision_score(y_test, y_pred, average='macro')
+
 
     print(classification_report(y_test, y_pred))
     
     # Print results
     print("\nModel Performance:")
-    print(f"Accuracy: {score:.4f}")
+    print(f"Accuracy: {accuracy:.4f}")
     
     # Print feature importance
     feature_importance = pd.DataFrame({
@@ -59,7 +63,7 @@ def random_forest_classify(df_music):
     print("\nTop 10 Most Important Features:")
     print(feature_importance.sort_values('importance', ascending=False).head(10))
     
-    return score
+    return accuracy, f1, precision, recall
 
 if __name__ == "__main__":
     # show_first_ten_rows()
