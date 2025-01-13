@@ -6,7 +6,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.decomposition import PCA
 import pandas as pd
 
-def knn_classify(df_music, n_neighbors=5):
+def knn_classify(df_music, n_neighbors=7):
     # Drop irrelevant columns
     df = df_music.drop(columns=["title"])
     
@@ -46,7 +46,7 @@ def knn_classify(df_music, n_neighbors=5):
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy:.4f}")
 
-    return knn, label_encoder
+    return accuracy
 
 if __name__ == "__main__":
     # Load the dataset

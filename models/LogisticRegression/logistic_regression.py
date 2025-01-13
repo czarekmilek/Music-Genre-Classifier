@@ -45,11 +45,11 @@ def logistic_regression_classifier(df_music):
  
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
-
+    accuracy = accuracy_score(y_test, y_pred)
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
 
-    return model, label_encoder
+    return accuracy
 
 if __name__ == "__main__":
  

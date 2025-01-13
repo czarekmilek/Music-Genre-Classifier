@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, accuracy_score
 from sklearn.preprocessing import LabelEncoder
 
 import pandas as pd
@@ -43,7 +43,7 @@ def random_forest_classify(df_music):
     rf.fit(X_train, y_train)
         
     y_pred = rf.predict(X_test)
-    score = rf.score(X_test, y_test)
+    score = accuracy_score(y_test, y_pred)
 
     print(classification_report(y_test, y_pred))
     

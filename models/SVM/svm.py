@@ -27,14 +27,14 @@ def svm_classify(df_music):
     model.fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
-
+    accuracy = accuracy_score(y_test, y_pred)
     print("\nClassification Report:")
     print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
 
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
 
-    return model, label_encoder
+    return accuracy
 
 
 if __name__ == "__main__":
