@@ -6,7 +6,7 @@ from sklearn.preprocessing import LabelEncoder
 
 import pandas as pd
 
-def show_first_ten_rows(file_path='music_features.csv'):
+def show_first_ten_rows(file_path='../../data/processed/music_features.csv'):
     df = pd.read_csv(file_path)
     print(df.columns)
     print(df.head(10))
@@ -63,5 +63,5 @@ def random_forest_classify(df_music):
 
 if __name__ == "__main__":
     # show_first_ten_rows()
-    df = pd.read_csv('music_features.csv')
+    df = pd.read_csv('../../data/processed/music_features.csv')
     random_forest_classify(df)

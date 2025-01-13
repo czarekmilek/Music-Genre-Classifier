@@ -38,5 +38,5 @@ def naive_bayes_classify(df_music):
     return model, label_encoder
 
 if __name__ == "__main__":
-    df = pd.read_csv('music_features.csv')
+    df = pd.read_csv('../../data/processed/music_features.csv')
     model, label_encoder = naive_bayes_classify(df)

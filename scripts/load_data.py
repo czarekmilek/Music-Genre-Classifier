@@ -1,12 +1,11 @@
 import numpy as np
 import os
-from extract_features import extract_audio_features
+from scripts.extract_features import extract_audio_features
 import pandas as pd
 from tqdm import tqdm
 
 
-FOLDER_PATH = "/Volumes/T7/muzyka_ml"
-# FOLDER_PATH = "/Users/szymon/Documents/projekciki/Music-Genre-Classifier/techno"
+FOLDER_PATH = "../data/raw/music"
 
 def loadData():
     all_features = []
@@ -33,7 +32,7 @@ if __name__ == "__main__":
     dataset = loadData()
     
     # Save to CSV
-    dataset.to_csv("music_features.csv", index=False)
+    dataset.to_csv("../data/processed/music_features.csv", index=False)
     
     print("Features extracted:")
     print("\nShape:", dataset.shape)
