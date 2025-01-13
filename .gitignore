@@ -24,8 +24,7 @@ Thumbs.db
 .idea/
 *.iml
 
-music_samples/
-data/
+
 *.wav
 *.mp3
 *.flac
