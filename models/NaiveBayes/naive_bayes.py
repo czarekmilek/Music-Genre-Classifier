@@ -40,7 +40,7 @@ def naive_bayes_classify(df_music):
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
     
-    return accuracy, f1, precision, recall
+    return accuracy, f1, precision, recall, model, label_encoder
 
 if __name__ == "__main__":
     df = pd.read_csv('../../data/processed/music_features.csv')

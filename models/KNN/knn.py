@@ -50,7 +50,7 @@ def knn_classify(df_music, n_neighbors=7):
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy:.4f}")
 
-    return accuracy, f1, precision, recall
+    return accuracy, f1, precision, recall, knn, label_encoder
 
 if __name__ == "__main__":
     # Load the dataset

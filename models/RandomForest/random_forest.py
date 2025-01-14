@@ -15,7 +15,7 @@ def show_first_ten_rows(file_path='../../data/processed/music_features.csv'):
 def random_forest_classify(df_music):
     df = df_music.drop(columns = ["title"])
     feature_cols = df_music.select_dtypes(include=[np.number]).columns
-    X = df_music[feature_cols]
+    X = df[feature_cols]
     
     # nadajemy numery kategoriom po prostu
     label_encoder = LabelEncoder()
@@ -63,7 +63,7 @@ def random_forest_classify(df_music):
     print("\nTop 10 Most Important Features:")
     print(feature_importance.sort_values('importance', ascending=False).head(10))
     
-    return accuracy, f1, precision, recall
+    return accuracy, f1, precision, recall, rf, label_encoder
 
 if __name__ == "__main__":
     # show_first_ten_rows()
