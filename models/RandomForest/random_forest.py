@@ -12,15 +12,14 @@ def show_first_ten_rows(file_path='../../data/processed/music_features.csv'):
     print(df.head(10))
 
 
-def random_forest_classify(df_music):
+def random_forest_classify(df_music: pd.DataFrame, category:str):
     df = df_music.drop(columns = ["title"])
+
+    df = df[df[category].isin([0, 1])]
+
     feature_cols = df_music.select_dtypes(include=[np.number]).columns
     X = df[feature_cols]
-    
-    # nadajemy numery kategoriom po prostu
-    label_encoder = LabelEncoder()
-    y = label_encoder.fit_transform(df_music['category'])
-
+    y = df[category]
 
     # dzielimy z zachowaniem proporcji
     X_train, X_test, y_train, y_test = train_test_split(
@@ -43,6 +42,7 @@ def random_forest_classify(df_music):
     rf.fit(X_train, y_train)
         
     y_pred = rf.predict(X_test)
+    y_prob = rf.predict_proba(X_test)[:, 1]
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average='macro')
     recall = recall_score(y_test, y_pred, average='macro')
@@ -63,9 +63,9 @@ def random_forest_classify(df_music):
     print("\nTop 10 Most Important Features:")
     print(feature_importance.sort_values('importance', ascending=False).head(10))
     
-    return accuracy, f1, precision, recall, rf, label_encoder
+    return accuracy, y_prob
 
 if __name__ == "__main__":
     # show_first_ten_rows()
     df = pd.read_csv('../../data/processed/music_features.csv')
-    random_forest_classify(df)
+    random_forest_classify(df, "rock")

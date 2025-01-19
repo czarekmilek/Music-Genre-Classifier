@@ -7,14 +7,13 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-def naive_bayes_classify(df_music):
+def naive_bayes_classify(df_music:pd.DataFrame, category:str):
     df = df_music.drop(columns=["title"])
+    df = df[df[category].isin([0, 1])]
+
     feature_cols = df.select_dtypes(include=[np.number]).columns
     X = df[feature_cols]
-    
-
-    label_encoder = LabelEncoder()
-    y = label_encoder.fit_transform(df_music['category'])
+    y = df[category]
 
     # Scaler - standardizes each column to have a mean of 0 and a standard deviation of 1
     scaler = StandardScaler()
@@ -28,7 +27,8 @@ def naive_bayes_classify(df_music):
     model.fit(X_train, y_train)
     
     y_pred = model.predict(X_test)
-    
+    y_prob = model.predict_proba(X_test)[:, 1]
+
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average='macro')
     recall = recall_score(y_test, y_pred, average='macro')
@@ -36,12 +36,12 @@ def naive_bayes_classify(df_music):
 
 
     print("\nClassification Report:")
-    print(classification_report(y_test, y_pred, target_names=label_encoder.classes_))
+    print(classification_report(y_test, y_pred))
     print("\nModel Performance:")
     print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
     
-    return accuracy, f1, precision, recall, model, label_encoder
+    return accuracy, y_prob
 
 if __name__ == "__main__":
     df = pd.read_csv('../../data/processed/music_features.csv')
-    model, label_encoder = naive_bayes_classify(df)
+    model, probabilities = naive_bayes_classify(df, "rock")
