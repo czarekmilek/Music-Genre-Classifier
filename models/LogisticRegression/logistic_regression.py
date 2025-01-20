@@ -9,7 +9,7 @@ import numpy as np
 def logistic_regression_classifier(df_music: pd.DataFrame, category: str):
     
     df = df_music.drop(columns=["title"])
-    df = df[df[category] == 1]
+    df = df[df[category].isin([0, 1])]
 
 
     feature_cols = df.select_dtypes(include=[np.number]).columns

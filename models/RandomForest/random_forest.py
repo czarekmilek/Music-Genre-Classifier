@@ -34,7 +34,7 @@ def random_forest_classify(df_music: pd.DataFrame, category:str):
     rf = RandomForestClassifier(
             n_estimators=1000,
             random_state=42,
-            min_samples_split=10,
+            min_samples_split=2,
             n_jobs=-1,
             criterion='gini'
         )

@@ -9,7 +9,7 @@ import pandas as pd
 def knn_classify(df_music: pd.DataFrame, category:str,  n_neighbors=7):
      
     df = df_music.drop(columns=["title"])
-    df = df[df[category] == 1]
+    df = df[df[category].isin([0, 1])]
 
     feature_cols = df.select_dtypes(include=[np.number]).columns
     X = df[feature_cols]
