@@ -47,8 +47,8 @@ def knn_classify(df_music: pd.DataFrame, category:str,  n_neighbors=7, verbose=0
     y_pred = knn.predict(X_test)
     y_prob = knn.predict_proba(X_test)
 
-    print("probabilities: ", y_prob[1])
-    print("label: ", y_pred[1])
+    # print("probabilities: ", y_prob[1])
+    # print("label: ", y_pred[1])
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average='macro')
     recall = recall_score(y_test, y_pred, average='macro')

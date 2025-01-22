@@ -52,6 +52,7 @@ class Pipeline:
             # for each category, based on vectors from models
             # we train logistic regression
             # category is passed solely for organising
+            # print(self.models["rock"]["feature_matrix"].shape)
             train_logistic_regression(X, y, category)
      
 
@@ -69,8 +70,8 @@ class Pipeline:
         for model_fun in self.MODELS_FUN:
             
             _, probabilities, y = model_fun(self.df_music, category)
-            # build vector of probabilities
-            songs_probs_matrix.append(probabilities)
+            # build vector of probabilities, value being =1
+            songs_probs_matrix.append(probabilities[:, 1])
         # each model uses the same sample to calcualte test, so y labels are the same
         return np.column_stack(songs_probs_matrix), y.values
 
@@ -117,4 +118,4 @@ if __name__ == "__main__":
 
     song_path = "/Users/szymon/Documents/projekciki/Music-Genre-Classifier/Guns N' Roses - Sweet Child O' Mine (Official Music Video).mp3"
 
-    pipeline.classify_song("/Users/szymon/Documents/projekciki/Music-Genre-Classifier/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3")
+    pipeline.classify_song(song_path)

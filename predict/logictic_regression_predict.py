@@ -35,7 +35,6 @@ def train_logistic_regression(X, y, category, verbose=0):
 
     y_pred = model.predict(X_test)
 
-
     y_prob = model.predict_proba(X_test)[:, 1]
 
     os.makedirs(f'{PATH_TO_LAST_STEP_MODELS}/categorized_regression', exist_ok=True)
