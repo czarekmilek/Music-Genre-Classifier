@@ -7,7 +7,7 @@ import pandas as pd
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-def naive_bayes_classify(df_music:pd.DataFrame, category:str):
+def naive_bayes_classify(df_music:pd.DataFrame, category:str, verbose=0):
     df = df_music.drop(columns=["title"])
     df = df[df[category].isin([0, 1])]
 
@@ -34,14 +34,14 @@ def naive_bayes_classify(df_music:pd.DataFrame, category:str):
     recall = recall_score(y_test, y_pred, average='macro')
     precision = precision_score(y_test, y_pred, average='macro')
 
-
-    print("\nClassification Report:")
-    print(classification_report(y_test, y_pred))
-    print("\nModel Performance:")
-    print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+    if verbose:
+        print("\nClassification Report:")
+        print(classification_report(y_test, y_pred))
+        print("\nModel Performance:")
+        print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
     
-    return accuracy, y_prob
+    return model, y_prob, y_test
 
 if __name__ == "__main__":
     df = pd.read_csv('../../data/processed/music_features.csv')
-    model, probabilities = naive_bayes_classify(df, "rock")
+    accuracy, probabilities = naive_bayes_classify(df, "rock")

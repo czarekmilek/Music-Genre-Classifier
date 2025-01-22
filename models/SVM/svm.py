@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 
-def svm_classify(df_music: pd.DataFrame, category:str):
+def svm_classify(df_music: pd.DataFrame, category:str, verbose=0):
     df = df_music.drop(columns=["title"])
     df = df[df[category].isin([0, 1])]
 
@@ -42,17 +42,18 @@ def svm_classify(df_music: pd.DataFrame, category:str):
     precision = precision_score(y_test, y_pred, average='macro')
     recall = recall_score(y_test, y_pred, average='macro')
 
-    print("\nClassification Report:")
-    print(classification_report(y_test, y_pred))
+    if verbose:
+        print("\nClassification Report:")
+        print(classification_report(y_test, y_pred))
 
-    print("\nModel Performance:")
-    print(f"Accuracy: {accuracy:.4f}")
+        print("\nModel Performance:")
+        print(f"Accuracy: {accuracy:.4f}")
+        
     
-   
-    print("\nPredicted Probabilities for the Positive Class (Rock):")
-    print(y_prob)
+        print("\nPredicted Probabilities for the Positive Class (Rock):")
+        print(y_prob)
 
-    return accuracy, y_prob
+    return model, y_prob, y_test
 
 
 if __name__ == "__main__":

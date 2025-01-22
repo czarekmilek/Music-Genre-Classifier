@@ -12,7 +12,7 @@ def show_first_ten_rows(file_path='../../data/processed/music_features.csv'):
     print(df.head(10))
 
 
-def random_forest_classify(df_music: pd.DataFrame, category:str):
+def random_forest_classify(df_music: pd.DataFrame, category:str, verbose=0):
     df = df_music.drop(columns = ["title"])
 
     df = df[df[category].isin([0, 1])]
@@ -49,21 +49,22 @@ def random_forest_classify(df_music: pd.DataFrame, category:str):
     precision = precision_score(y_test, y_pred, average='macro')
 
 
-    print(classification_report(y_test, y_pred))
+    if verbose:
+        print(classification_report(y_test, y_pred))
+        
+        # Print results
+        print("\nModel Performance:")
+        print(f"Accuracy: {accuracy:.4f}")
+        
+        # Print feature importance
+        feature_importance = pd.DataFrame({
+            'feature': feature_cols,
+            'importance': rf.feature_importances_
+        })
+        print("\nTop 10 Most Important Features:")
+        print(feature_importance.sort_values('importance', ascending=False).head(10))
     
-    # Print results
-    print("\nModel Performance:")
-    print(f"Accuracy: {accuracy:.4f}")
-    
-    # Print feature importance
-    feature_importance = pd.DataFrame({
-        'feature': feature_cols,
-        'importance': rf.feature_importances_
-    })
-    print("\nTop 10 Most Important Features:")
-    print(feature_importance.sort_values('importance', ascending=False).head(10))
-    
-    return accuracy, y_prob
+    return rf, y_prob, y_test
 
 if __name__ == "__main__":
     # show_first_ten_rows()

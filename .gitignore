@@ -33,3 +33,6 @@ Thumbs.db
 *.dll
 *.so
 *.out
+
+/binary_models
+/last_step_models
