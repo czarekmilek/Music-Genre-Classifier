@@ -22,7 +22,7 @@ def train_logistic_regression(X, y, category, verbose=0):
     # print(self.X.shape)
 
     X_train, X_test, y_train, y_test = train_test_split(
-            X, y, random_state=42, test_size=0.2
+            X, y, random_state=42, test_size=0.2, stratify=y
     )
 
 

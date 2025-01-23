@@ -6,33 +6,28 @@ from sklearn.decomposition import PCA
 import pandas as pd
 import numpy as np
 
+from scripts.model_scripts import prepare_model_data, save_model
+
+
 def logistic_regression_classifier(df_music: pd.DataFrame, category: str, verbose=0):
     
-    df = df_music.drop(columns=["title"])
-    df = df[df[category].isin([0, 1])]
+    # df = df_music.drop(columns=["title"])
+    # df = df[df[category].isin([0, 1])]
+    # feature_cols = df.select_dtypes(include=[np.number]).columns
 
+    X_train, X_test, y_train, y_test, scaler = prepare_model_data(df_music, category)
 
-    feature_cols = df.select_dtypes(include=[np.number]).columns
-    X = df[feature_cols]
-   
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-
-    pca = PCA(n_components=36)  
-    X_pca = pca.fit_transform(X_scaled)
-    y = df[category]
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_pca, y, random_state=42, test_size=0.2, stratify=y
-    )
-
-    model = LogisticRegression(
+    lr = LogisticRegression(
         random_state=42, 
         max_iter=1000,  
     )
-    model.fit(X_train, y_train)
+    lr.fit(X_train, y_train)
 
-    y_pred = model.predict(X_test)
-    y_prob = model.predict_proba(X_test)[:, 1]  # Probability for class 1
+    y_pred = lr.predict(X_test)
+    y_prob = lr.predict_proba(X_test)
+
+    save_model(model=lr, mode_name='lr', category=category, scaler=scaler)
+
 
     accuracy = accuracy_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred, average='macro')
@@ -49,8 +44,10 @@ def logistic_regression_classifier(df_music: pd.DataFrame, category: str, verbos
         print("\nPredicted Probabilities for Class 1:")
         print(y_prob[:10])  
 
-    return model, y_prob, y_test
+    return accuracy, y_prob, y_test
 
 if __name__ == "__main__":
-    df = pd.read_csv("../../data/processed/music_features.csv")
-    accuracy, probabilities = logistic_regression_classifier(df, "rock")
+    df = pd.read_csv('/Users/szymon/Documents/projekciki/Music-Genre-Classifier/data/processed/music_features_binary_genres.csv')
+    accuracy, probabilities, y_test = logistic_regression_classifier(df, "rock")
+    print(accuracy)
+    print(y_test)

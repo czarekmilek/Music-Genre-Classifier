@@ -9,3 +9,5 @@ NON_NUMERICAL_COLUMNS = ['title', 'pop', 'blues', 'hip-hop', 'rock', 'classical'
 
 PATH_TO_BINARY_MODELS = "binary_models"
 PATH_TO_LAST_STEP_MODELS = "last_step_models"
+SPLIT_RANDOM_SEED = 42
+SPLIT_PERCENTAGE = 0.1

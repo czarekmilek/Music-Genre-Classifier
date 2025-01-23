@@ -13,6 +13,7 @@ from models.SVM.svm import svm_classify
 from scripts.config import DATAFRAME_PATH, PATH_TO_BINARY_MODELS, PATH_TO_LAST_STEP_MODELS
 from .logictic_regression_predict import train_logistic_regression
 from scripts.extract_features import extract_audio_features
+from .create_log import log_classification_results
 
 # skitlearn
 from sklearn.model_selection import train_test_split
@@ -27,8 +28,9 @@ class Pipeline:
 #, 'blues', 'hip-hop', 'rock', 'classical', 'reggae', 'country', 'metal', 'techno', 'jazz'
 # , naive_bayes_classify, logistic_regression_classifier, random_forest_classify, svm_classify
     def __init__(self, df_music):
-        self.CATEGORIES = ['rock']
-        self.MODELS_FUN = [knn_classify]
+        self.CATEGORIES = ['rock', 'pop', 'classical', 'blues', 'hip-hop', 'reggae', 'country', 'metal', 'techno', 'jazz']
+        self.MODELS_NAMES = ["knn", "lr", "nb", "rf", "svm"] # arrays used for models loading
+        self.MODELS_FUN = [knn_classify, logistic_regression_classifier, naive_bayes_classify, random_forest_classify, svm_classify]
         
         self.df_music = df_music
         # dictionary of models
@@ -53,6 +55,7 @@ class Pipeline:
             # we train logistic regression
             # category is passed solely for organising
             # print(self.models["rock"]["feature_matrix"].shape)
+            print("last step logistic regression trained on: ", X.shape)
             train_logistic_regression(X, y, category)
      
 
@@ -70,6 +73,7 @@ class Pipeline:
         for model_fun in self.MODELS_FUN:
             
             _, probabilities, y = model_fun(self.df_music, category)
+            
             # build vector of probabilities, value being =1
             songs_probs_matrix.append(probabilities[:, 1])
         # each model uses the same sample to calcualte test, so y labels are the same
@@ -88,25 +92,42 @@ class Pipeline:
         # print(extract_audio_features(song_path).values())
 
         for category in self.CATEGORIES:
-
+            
+            # load last step logistic regression
             logistic = load(f'{PATH_TO_LAST_STEP_MODELS}/categorized_regression/{category}.joblib')
+            
+            # vector build according to binary models predictions
+            song_probs_vector = []
+            for name in self.MODELS_NAMES:
 
-            # Load saved components
-            knn = load(f'{PATH_TO_BINARY_MODELS}/knn/knn_model_{category}.joblib')
-            scaler = load(f'{PATH_TO_BINARY_MODELS}/knn/scaler_{category}.joblib')
-            pca = load(f'{PATH_TO_BINARY_MODELS}/knn/pca_{category}.joblib')
+                # Load saved components
+                model = load(f'{PATH_TO_BINARY_MODELS}/{name}/model_{category}.joblib')
+                scaler = load(f'{PATH_TO_BINARY_MODELS}/{name}/scaler_{category}.joblib')
             
-            # Transform features
-            X_scaled = scaler.transform(features)
-            # X_pca = pca.transform(X_scaled)
+                # Transform features
+                X_scaled = scaler.transform(features)
+                # X_pca = pca.transform(X_scaled)
+                
+                # biorę PPB na 1 z każdego modelu, w kolejnych kategoriach
+                probs = model.predict_proba(X_scaled)[:, 1][0]
+                print("probs", probs)
+                song_probs_vector.append(probs)
             
-            # biorę PPB na 1 z każdego modelu, w kolejnych kategoriach
-            probs_knn = knn.predict_proba(X_scaled)[:, 1]
 
-            logistic_prob = logistic.predict_proba(np.array([probs_knn]))[:, 1]
+            # last step logistic regression, accepts a vector created by binary models
+            # print("Input for last step logistic regression: ", np.array([song_probs_vector]).shape)
+            logistic_prob = logistic.predict_proba(np.array([song_probs_vector]))[:, 1]
             
-            print(f"Probability for {category}: {probs_knn}")
-            print(f"probability according to logistic regression", logistic_prob)
+            # Inside the for category loop, after calculating logistic_prob:
+            log_classification_results(
+                song_path,
+                category,
+                song_probs_vector,
+                logistic_prob[0],
+                "classification_logs"
+            )
+            # print(f"Probability for {category}: {song_probs_vector}")
+            # print(f"probability according to logistic regression", logistic_prob)
 
 
 
@@ -116,6 +137,6 @@ if __name__ == "__main__":
     DF = pd.read_csv(DATAFRAME_PATH)
     pipeline = Pipeline(DF)
 
-    song_path = "/Users/szymon/Documents/projekciki/Music-Genre-Classifier/Guns N' Roses - Sweet Child O' Mine (Official Music Video).mp3"
+    song_path = "/Users/szymon/Documents/projekciki/Music-Genre-Classifier/Mozart - Lacrimosa.mp3"
 
     pipeline.classify_song(song_path)
