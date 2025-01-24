@@ -20,7 +20,7 @@ To set up and run this project, ensure that you have the following tools install
 
 #### 1.2. Create VENV (Optional)
 
-> python -m venv .venv
+> python3 -m venv .venv
 
 ##### Linux / macOS:
 
