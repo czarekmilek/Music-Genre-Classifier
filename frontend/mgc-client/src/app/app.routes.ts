@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-
 export const routes: Routes = [
   {
     path: '',
@@ -12,6 +11,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/predict-genre/predict-genre.component').then(
         (c) => c.PredictGenreComponent
+      ),
+  },
+  {
+    path: 'result-view',
+    loadComponent: () =>
+      import('./pages/result-view/result-view.component').then(
+        (c) => c.ResultViewComponent
       ),
   },
 ];

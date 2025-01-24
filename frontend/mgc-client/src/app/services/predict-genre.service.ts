@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProbObject } from '../models/predict-genre-response.model';
 
@@ -11,10 +11,13 @@ export class PredictGenreService {
 
   constructor(private http: HttpClient) {}
 
-  uploadFile(file: File): Observable<ProbObject> {
+  uploadFile(file: File): Observable<HttpEvent<ProbObject>> {
     const formData = new FormData();
     formData.append('file', file, file.name);
-
-    return this.http.post<ProbObject>(`${this.apiUrl}/classify`, formData);
+    const req = new HttpRequest('POST', `${this.apiUrl}/classify`, formData, {
+      reportProgress: true,
+      responseType: 'json',
+    });
+    return this.http.request<ProbObject>(req);
   }
 }
