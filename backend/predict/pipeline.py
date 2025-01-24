@@ -15,15 +15,11 @@ from .logictic_regression_predict import train_logistic_regression
 from scripts.extract_features import extract_audio_features
 from .create_log import log_classification_results
 
-# skitlearn
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, accuracy_score, f1_score, recall_score, precision_score
+
 
 # RUN AS MODULE python -m predict.logictic_regression_predict
 
 class Pipeline:
-
     
 #, 'blues', 'hip-hop', 'rock', 'classical', 'reggae', 'country', 'metal', 'techno', 'jazz'
 # , naive_bayes_classify, logistic_regression_classifier, random_forest_classify, svm_classify
@@ -85,7 +81,7 @@ class Pipeline:
         # make sure values are in the same order as in trained CSV
         # creates a vector (1,37) that can be fed to the model
         features = np.array([float(num) for num in extract_audio_features(song_path).values()]).reshape(1, -1)
-       
+        results = {}
         
         # print(features.shape)
 
@@ -116,27 +112,7 @@ class Pipeline:
 
             # last step logistic regression, accepts a vector created by binary models
             # print("Input for last step logistic regression: ", np.array([song_probs_vector]).shape)
-            logistic_prob = logistic.predict_proba(np.array([song_probs_vector]))[:, 1]
+            logistic_prob = logistic.predict_proba(np.array([song_probs_vector]))[:, 1][0]
+            results[category] = logistic_prob
             
-            # Inside the for category loop, after calculating logistic_prob:
-            log_classification_results(
-                song_path,
-                category,
-                song_probs_vector,
-                logistic_prob[0],
-                "classification_logs"
-            )
-            # print(f"Probability for {category}: {song_probs_vector}")
-            # print(f"probability according to logistic regression", logistic_prob)
-
-
-
-
-
-if __name__ == "__main__":
-    DF = pd.read_csv(DATAFRAME_PATH)
-    pipeline = Pipeline(DF)
-
-    song_path = "/Users/szymon/Documents/projekciki/Music-Genre-Classifier/Mozart - Lacrimosa.mp3"
-
-    pipeline.classify_song(song_path)
+        return results
