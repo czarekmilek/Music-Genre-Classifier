@@ -1,0 +1,44 @@
+// Light mode
+.light-theme {
+  --primary-bg-clr: #ffffff;
+  --secondary-bg-clr: #ffffff;
+  --accent-sec-clr: rgb(100, 129, 193);
+  --accent-clr: rgb(205, 224, 255);
+  --main-content-bg-color: rgba(255, 255, 255, 0.5);
+  --primary-txt-clr: #232425;
+  --secondary-txt-clr: #ffffff;
+  --primary-accent-clr: rgb(226, 239, 255);
+  --primary-accent-clr-hover: rgb(236, 245, 255);
+  --primary-error-clr: #ff7674;
+  --primary-warning-clr: #db8f00;
+
+  // Login
+  --file-card-bg-clr: rgba(239, 245, 255, 0.5);
+
+  // Button Colors
+  --primary-button-txt-clr: rgb(86, 86, 86);
+  --primary-button-bg-clr: rgb(255, 255, 255);
+  --func-button-primary-bg: 168, 193, 231;
+  --func-button-secondary-bg: 148, 173, 209;
+  --func-button-active-primary-bg: 220, 220, 220;
+  --func-button-active-secondary-bg: 56, 99, 134;
+}
+body.light-theme {
+  background: rgb(255, 255, 255);
+  background: -moz-radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(225, 234, 255, 1) 100%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(225, 234, 255, 1) 100%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(225, 234, 255, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#e1eaff",GradientType=1);
+}

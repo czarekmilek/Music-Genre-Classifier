@@ -1,0 +1,31 @@
+<div
+  class="relative flex flex-col h-full w-full items-center justify-center rounded-2xl outline-dashed outline-4 outline-[var(--accent-clr)] -outline-offset-4"
+>
+  <input
+    #fileInput
+    type="file"
+    (change)="handleChange($event)"
+    class="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
+  />
+
+  <p
+    class="mb-3 max-w-[90%] text-center text-lg text-[var(--accent-sec-clr)] font-normal"
+  >
+    Drag & drop or select files
+  </p>
+
+  <button
+    type="button"
+    (click)="fileInput.click()"
+    class="z-10 flex cursor-pointer items-center justify-center rounded-[0.5rem] bg-func-button-primary-background px-[0.6em] py-[0.35em] text-center text-base font-medium shadow-[0_1.5px_0_1.5px_rgba(var(--func-button-secondary-bg))] outline-none transition-[background-color] duration-100 ease-in-out focus-visible:translate-y-[1.5px] focus-visible:bg-func-button-active-primary-background focus-visible:!shadow-[0_0_0_1.5px_rgba(var(--func-button-secondary-bg))] active:translate-y-[1.5px] active:!shadow-[0_0_0_1.5px_rgba(var(--func-button-secondary-bg))]"
+  >
+    <span class="text-[var(--secondary-txt-clr)] font-medium">Files</span>
+    <span
+      class="ml-2 flex h-[1.6rem] w-[1.6rem] items-center justify-center rounded-[50%] bg-func-button-secondary-background text-[var(--secondary-txt-clr)] shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+      ><mat-icon
+        class="!h-[1.125rem] !w-[1.125rem] !text-[1.125rem] !font-light"
+        >attach_file</mat-icon
+      ></span
+    >
+  </button>
+</div>
