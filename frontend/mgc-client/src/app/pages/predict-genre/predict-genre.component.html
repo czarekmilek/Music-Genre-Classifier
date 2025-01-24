@@ -5,6 +5,9 @@
     <h2 class="text-3xl font-semibold text-[var(--accent-sec-clr)]">
       Get a music genre analysis
     </h2>
-    <app-file-upload class="w-[90%] h-full"></app-file-upload>
+    <app-file-upload
+      class="w-[90%] h-full"
+      (probObject)="handleClassificationResult($event)"
+    ></app-file-upload>
   </div>
 </div>
