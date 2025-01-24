@@ -1,18 +1,18 @@
-import { Component, output } from '@angular/core';
+import { Component, EventEmitter, Output, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { PredictGenreService } from '../../services/predict-genre.service';
 import { ProbObject } from '../../models/predict-genre-response.model';
-
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-file-upload',
-  imports: [MatIconModule],
+  imports: [MatIconModule, MatProgressSpinnerModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss',
 })
 export class FileUploadComponent {
-  probObject = output<ProbObject>();
-
-  constructor(private predictGenreService: PredictGenreService) {}
+  uploadedFile = output<File>();
 
   handleChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -29,15 +29,7 @@ export class FileUploadComponent {
         alert('The file is too large! Maximum size allowed is 10 MB.');
         return;
       }
-      this.predictGenreService.uploadFile(file).subscribe({
-        next: (response: ProbObject) => {
-          this.probObject.emit(response);
-        },
-        error: (error) => {
-          console.error('Error while uploading the file:', error);
-          alert('Failed to upload the file.');
-        },
-      });
+      this.uploadedFile.emit(file);
     }
   }
 }

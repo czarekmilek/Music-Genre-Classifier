@@ -1,13 +1,31 @@
 <div class="flex items-center justify-center h-full">
   <div
-    class="h-[30rem] w-[35rem] rounded-xl bg-[var(--file-card-bg-clr)] p-10 shadow-[0_4px_12px_-1px_rgba(0,0,0,0.15)] backdrop-blur-lg flex items-center flex-col gap-6"
+    class="h-[30rem] w-[35rem] relative rounded-xl bg-[var(--file-card-bg-clr)] p-10 shadow-[0_4px_12px_-1px_rgba(0,0,0,0.15)] backdrop-blur-lg flex items-center flex-col gap-6"
   >
+    @if (isLoading()) {
+
+    <div
+      class="absolute bottom-0 left-0 right-0 top-0 z-[1000] grid-cols-1 grid items-center justify-items-center gap-5 rounded-[inherit]"
+    >
+      <h2 class="text-3xl font-semibold text-[var(--accent-sec-clr)]">
+        Analyzing...
+      </h2>
+      <mat-spinner></mat-spinner>
+      <button
+        (click)="cancelAnalysis()"
+        class="rounded-2xl bg-[transparent] w-[10.625rem] h-[3.25rem] text-lg font-medium text-[var(--accent-sec-clr)] tracking-[0.1em] box-border border-[2px] border-[var(--accent-clr)]"
+      >
+        Cancel
+      </button>
+    </div>
+    } @else {
     <h2 class="text-3xl font-semibold text-[var(--accent-sec-clr)]">
       Get a music genre analysis
     </h2>
     <app-file-upload
+      (uploadedFile)="handleFileUpload($event)"
       class="w-[90%] h-full"
-      (probObject)="handleClassificationResult($event)"
     ></app-file-upload>
+    }
   </div>
 </div>

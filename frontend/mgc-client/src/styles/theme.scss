@@ -24,6 +24,7 @@
   --func-button-active-secondary-bg: 56, 99, 134;
 }
 body.light-theme {
+  --mdc-circular-progress-active-indicator-color: var(--accent-sec-clr);
   background: rgb(255, 255, 255);
   background: -moz-radial-gradient(
     circle,
