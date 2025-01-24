@@ -1,51 +1,49 @@
 # Music-Genre-Classifier 🎶
 
+## System Requirements 🛠️
+
+To set up and run this project, ensure that you have the following tools installed:
+
+- **Python**: Version 3.9 or newer
+- **Node.js**: Version ^18.19.1, ^20.11.1, or ^22.0.0
+- **Angular CLI** (optional): Version 19.x or newer
+> **Note**: Angular CLI is optional, as the project can be run using `npx` without requiring a global installation of Angular CLI.
+> 
 ## SETUP 🚀
-
-### 1. Clone repository:
-
+### Clone repository
 > git clone https://github.com/PT00/Music-Genre-Classifier.git
->
-> cd Music-Genre-Classifier
 
-### 2. Create VENV (Optional)
+### 1. Python Backend
 
-> python -m venv env
+#### 1.1. Change directory:
+> cd Music-Genre-Classifier/backend
 
-#### Linux / macOS:
+#### 1.2. Create VENV (Optional)
 
-> source env/bin/activate
+> python -m venv .venv
 
-#### Windows:
+##### Linux / macOS:
+
+> source .venv/bin/activate
+
+##### Windows:
 
 > env\Scripts\activate
 
-### 3. Install Python packages:
+#### 1.3. Install Python packages
 
 > pip install -r requirements.txt
 
-### 4. Install other packages:
+#### 1.4. Run Local Server
+> uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
-#### Install FFmpeg 📦
+### 2. Angular Frontend
 
-To use `yt-dlp` for downloading and extracting audio, FFmpeg must be installed on your system. Follow the instructions for your operating system:
+#### 2.1. Change directory:
+> cd Music-Genre-Classifier/frontend/mgc-client
 
-##### macOS (via Homebrew)
+#### 2.2. Install packages
+> npm install
 
-> brew install ffmpeg
-
-##### Linux (Ubuntu/Debian-based)
-
-> sudo apt update
-> sudo apt install ffmpeg
-
-##### Windows
-
-> 1. Download FFmpeg from [ffmpeg.org](https://ffmpeg.org/download.html).
-> 2. Extract the archive and add the `bin` folder to your system's PATH.
-
-## Terminal commands
-
-### Download YouTube Playlist:
-
-> yt-dlp -x --audio-format mp3 -o "DIRECTORY_FOLDER_NAME/%(title)s.%(ext)s" "PLAYLIST_LINK"
+#### 2.3. Run Client App
+> npx ng serve
