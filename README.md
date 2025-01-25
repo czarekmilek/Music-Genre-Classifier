@@ -21,6 +21,9 @@ To set up and run this project, ensure that you have the following tools install
 #### 1.2. Create VENV (Optional)
 
 > python3 -m venv .venv
+>
+ or
+> python -m venv .venv
 
 ##### Linux / macOS:
 
@@ -28,7 +31,7 @@ To set up and run this project, ensure that you have the following tools install
 
 ##### Windows:
 
-> env\Scripts\activate
+> .venv\Scripts\activate
 
 #### 1.3. Install Python packages
 
