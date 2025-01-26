@@ -4,6 +4,8 @@ import numpy as np
 from tqdm import tqdm
 from joblib import dump, load
 
+
+
 # inner files
 from models.KNN.knn import knn_classify
 from models.NaiveBayes.naive_bayes import naive_bayes_classify
@@ -14,6 +16,8 @@ from scripts.config import DATAFRAME_PATH, PATH_TO_BINARY_MODELS, PATH_TO_LAST_S
 from .logictic_regression_predict import train_logistic_regression
 from scripts.extract_features import extract_audio_features
 from .create_log import log_classification_results
+from scripts.config import DATAFRAME_PATH
+
 
 
 
@@ -21,8 +25,7 @@ from .create_log import log_classification_results
 
 class Pipeline:
     
-#, 'blues', 'hip-hop', 'rock', 'classical', 'reggae', 'country', 'metal', 'techno', 'jazz'
-# , naive_bayes_classify, logistic_regression_classifier, random_forest_classify, svm_classify
+    #, 'pop', 'classical', 'blues', 'hip-hop', 'reggae', 'country', 'metal', 'techno', 'jazz'
     def __init__(self, df_music):
         self.CATEGORIES = ['rock', 'pop', 'classical', 'blues', 'hip-hop', 'reggae', 'country', 'metal', 'techno', 'jazz']
         self.MODELS_NAMES = ["knn", "lr", "nb", "rf", "svm"] # arrays used for models loading
@@ -51,7 +54,8 @@ class Pipeline:
             # we train logistic regression
             # category is passed solely for organising
             # print(self.models["rock"]["feature_matrix"].shape)
-            print("last step logistic regression trained on: ", X.shape)
+            # print("last step logistic regression trained on: ", X.shape)
+            # add verbose=1 for logging
             train_logistic_regression(X, y, category)
      
 
@@ -83,9 +87,6 @@ class Pipeline:
         features = np.array([float(num) for num in extract_audio_features(song_path).values()]).reshape(1, -1)
         results = {}
         
-        # print(features.shape)
-
-        # print(extract_audio_features(song_path).values())
 
         for category in self.CATEGORIES:
             
@@ -114,5 +115,12 @@ class Pipeline:
             # print("Input for last step logistic regression: ", np.array([song_probs_vector]).shape)
             logistic_prob = logistic.predict_proba(np.array([song_probs_vector]))[:, 1][0]
             results[category] = logistic_prob
+
+            
             
         return results
+
+
+if __name__ == "__main__":
+    df_music = pd.read_csv(DATAFRAME_PATH)
+    pipeline = Pipeline(df_music)
