@@ -14,12 +14,15 @@ import { PieChartComponent } from "../../components/pie-chart/pie-chart.componen
 export class ResultViewComponent {
   probObject: ProbObject | null = null;
   pieChartData: { labels: string[]; values: number[] } | null = null;
+  songName: string | null = null;
 
   constructor(private probObjectService: ProbObjectService) {}
 
   ngOnInit() {
     this.probObject = this.probObjectService.getProbObject();
+    this.songName = this.probObjectService.getFileName();
     console.log('Results: ', this.probObject);
+    console.log('Song Name: ', this.songName);
 
     if (this.probObject) {
       this.pieChartData = {
