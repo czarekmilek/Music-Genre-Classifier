@@ -36,6 +36,8 @@ def train_logistic_regression(X, y, category, verbose=0):
         # class_weight='balanced',
         random_state=42,
         max_iter=1000, 
+        solver='lbfgs',
+        tol=1e-4
         # penalty='l2' 
     )
     model.fit(X_train, y_train)
@@ -52,6 +54,11 @@ def train_logistic_regression(X, y, category, verbose=0):
     dump(model, f'{PATH_TO_LAST_STEP_MODELS}/categorized_regression/{category}.joblib')
 
     if verbose:
+
+        coef_importance = pd.DataFrame({
+            'feature': [f'feature_{i}' for i in range(len(model.coef_[0]))],
+            'importance': abs(model.coef_[0])
+        }).sort_values('importance', ascending=False)
 
         accuracy = accuracy_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred, average='macro')
@@ -79,6 +86,8 @@ def train_logistic_regression(X, y, category, verbose=0):
         # Log metrics with category logger
         logger.info("Y pred: %s", y_pred)
         logger.info("Y test: %s", y_test)
+        logger.info("\nFeature Importance by Coefficients:")
+        logger.info(coef_importance)
         logger.info("Cross Entropy Loss on training set: %f", ce_loss)
         logger.info("\nClassification Report For Logistic Regression:")
         logger.info(classification_report(y_test, y_pred))

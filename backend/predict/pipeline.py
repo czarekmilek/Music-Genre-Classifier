@@ -56,7 +56,7 @@ class Pipeline:
             # print(self.models["rock"]["feature_matrix"].shape)
             # print("last step logistic regression trained on: ", X.shape)
             # add verbose=1 for logging
-            train_logistic_regression(X, y, category)
+            train_logistic_regression(X, y, category, verbose=1)
      
 
 
@@ -72,7 +72,7 @@ class Pipeline:
         # here we run models for each category and save them to reuse
         for model_fun in self.MODELS_FUN:
             
-            _, probabilities, y = model_fun(self.df_music, category)
+            probabilities, y = model_fun(self.df_music, category)
             
             # build vector of probabilities, value being =1
             songs_probs_matrix.append(probabilities[:, 1])

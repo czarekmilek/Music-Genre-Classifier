@@ -38,3 +38,4 @@ Thumbs.db
 /last_step_models
 /classification_logs
 /predict/logistic_regression_log
+/scripts/models_logs

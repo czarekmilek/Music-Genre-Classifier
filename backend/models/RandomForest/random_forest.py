@@ -1,15 +1,12 @@
 import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
-from sklearn.preprocessing import LabelEncoder
 import pandas as pd
-from joblib import dump, load
+from joblib import load
 from scripts.config import DATAFRAME_PATH, PATH_TO_BINARY_MODELS, PATH_TO_LAST_STEP_MODELS
 from scripts.extract_features import extract_audio_features
 
 
-from scripts.model_scripts import prepare_model_data, save_model
+from scripts.model_scripts import prepare_model_data, save_model, log_evaluation_model_results
 
 
 def show_first_ten_rows(file_path='../../data/processed/music_features.csv'):
@@ -44,25 +41,15 @@ def random_forest_classify(df_music: pd.DataFrame, category:str, verbose=0):
         
     y_pred = rf.predict(X_test)
     y_prob = rf.predict_proba(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
 
     save_model(model=rf, mode_name='rf', category=category, scaler=scaler)
 
 
-    f1 = f1_score(y_test, y_pred, average='macro')
-    recall = recall_score(y_test, y_pred, average='macro')
-    precision = precision_score(y_test, y_pred, average='macro')
-
-
     if verbose:
-        print(classification_report(y_test, y_pred))
-        
-        # Print results
-        print("\nModel Performance:")
-        print(f"Accuracy: {accuracy:.4f}")
+        log_evaluation_model_results(y_test, y_pred, y_prob, 'rf', category)
         
     
-    return rf, y_prob, y_test
+    return y_prob, y_test
 
 if __name__ == "__main__":
     # show_first_ten_rows()

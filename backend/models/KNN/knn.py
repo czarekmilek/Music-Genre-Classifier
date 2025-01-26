@@ -1,12 +1,7 @@
-import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report, accuracy_score, f1_score, recall_score, precision_score
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.decomposition import PCA
 import pandas as pd
 
-from scripts.model_scripts import prepare_model_data, save_model
+from scripts.model_scripts import prepare_model_data, save_model, log_evaluation_model_results
 
 
 def knn_classify(df_music: pd.DataFrame, category:str,  n_neighbors=7, verbose=0):
@@ -29,19 +24,11 @@ def knn_classify(df_music: pd.DataFrame, category:str,  n_neighbors=7, verbose=0
     save_model(model=knn, mode_name='knn', category=category, scaler=scaler)
 
 
-    accuracy = accuracy_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred, average='macro')
-    recall = recall_score(y_test, y_pred, average='macro')
-    precision = precision_score(y_test, y_pred, average='macro')
-
     if verbose:
-        print("\nClassification Report:")
-        print(classification_report(y_test, y_pred))
-        print("\nModel Performance:")
-        print(f"Accuracy: {accuracy:.4f}")
+        log_evaluation_model_results(y_test, y_pred, y_prob, 'knn', category)
 
 
-    return accuracy, y_prob, y_test
+    return y_prob, y_test
 
 if __name__ == "__main__":
     # run as module  python -m models.KNN.knn
