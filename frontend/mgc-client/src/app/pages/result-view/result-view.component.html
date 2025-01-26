@@ -1,5 +1,29 @@
 <div class="flex items-center justify-center h-full">
   <div
-    class="h-[60vh] w-[50vw] relative rounded-xl bg-[var(--file-card-bg-clr)] p-10 shadow-[0_4px_12px_-1px_rgba(0,0,0,0.15)] backdrop-blur-lg flex items-center flex-col gap-6"
-  ></div>
+    class="h-auto w-[50vw] relative rounded-xl bg-[var(--file-card-bg-clr)] p-10 shadow-[0_4px_12px_-1px_rgba(0,0,0,0.15)] backdrop-blur-lg flex flex-col gap-6"
+  >
+    <h2 class="text-3xl font-semibold text-center text-[var(--accent-sec-clr)]">
+      Genre Prediction Results
+    </h2>
+    <ng-container *ngIf="probObject; else noResult">
+      <ul class="list-none w-full flex flex-col gap-3">
+        <li
+          *ngFor="let genre of probObject | keyvalue"
+          class="flex justify-between text-lg text-[var(--primary-txt-clr)]"
+        >
+          <span class="capitalize font-medium">{{ genre.key }}</span>
+          <span>{{ (genre.value * 100).toFixed(2) }}%</span>
+        </li>
+      </ul>
+      <app-pie-chart
+        *ngIf="pieChartData"
+        [data]="pieChartData"
+      ></app-pie-chart>
+    </ng-container>
+    <ng-template #noResult>
+      <p class="text-lg text-center text-[var(--accent-sec-clr)]">
+        No classification result available.
+      </p>
+    </ng-template>
+  </div>
 </div>
