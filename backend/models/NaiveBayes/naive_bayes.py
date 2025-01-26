@@ -1,13 +1,7 @@
-import numpy as np
-from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
-from sklearn.preprocessing import LabelEncoder
 import pandas as pd
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
 
-from scripts.model_scripts import prepare_model_data, save_model
+from scripts.model_scripts import prepare_model_data, save_model, log_evaluation_model_results
 
 
 def naive_bayes_classify(df_music:pd.DataFrame, category:str, verbose=0):
@@ -31,18 +25,11 @@ def naive_bayes_classify(df_music:pd.DataFrame, category:str, verbose=0):
     save_model(model=nb, mode_name='nb', category=category, scaler=scaler)
 
 
-    accuracy = accuracy_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred, average='macro')
-    recall = recall_score(y_test, y_pred, average='macro')
-    precision = precision_score(y_test, y_pred, average='macro')
-
     if verbose:
-        print("\nClassification Report:")
-        print(classification_report(y_test, y_pred))
-        print("\nModel Performance:")
-        print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+        log_evaluation_model_results(y_test, y_pred, y_prob, 'nb', category)
+       
     
-    return accuracy, y_prob, y_test
+    return y_prob, y_test
 
 if __name__ == "__main__":
     df = pd.read_csv('../../data/processed/music_features.csv')
