@@ -23,10 +23,10 @@
       </div>
       
       <!-- Results List -->
-      <ng-container *ngIf="probObject; else noResult">
+      <ng-container *ngIf="propObject; else noResult">
         <div class="flex flex-col gap-4 w-1/4 m-8">
           <h3 class="text-xl font-medium text-[var(--accent-sec-clr)]">List of predictions</h3>
-          <div *ngFor="let genre of probObject | keyvalue">
+          <div *ngFor="let genre of propObject | keyvalue">
             <span class="capitalize font-medium">{{ genre.key }}: </span>
             <span>{{ (genre.value * 100).toFixed(2) }}%</span>
           </div>

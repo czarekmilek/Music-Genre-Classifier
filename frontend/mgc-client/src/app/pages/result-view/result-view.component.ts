@@ -12,22 +12,23 @@ import { PieChartComponent } from "../../components/pie-chart/pie-chart.componen
   styleUrls: ['./result-view.component.scss'],
 })
 export class ResultViewComponent {
-  probObject: ProbObject | null = null;
+  propObject: ProbObject | null = null;
+  sortedPropEntries: [string, number][] = [];
   pieChartData: { labels: string[]; values: number[] } | null = null;
   songName: string | null = null;
 
   constructor(private probObjectService: ProbObjectService) {}
 
   ngOnInit() {
-    this.probObject = this.probObjectService.getProbObject();
+    this.propObject = this.probObjectService.getProbObject();
     this.songName = this.probObjectService.getFileName();
-    console.log('Results: ', this.probObject);
+    console.log('Results: ', this.propObject);
     console.log('Song Name: ', this.songName);
 
-    if (this.probObject) {
+    if (this.propObject) {
       this.pieChartData = {
-        labels: Object.keys(this.probObject),
-        values: Object.values(this.probObject),
+        labels: Object.keys(this.propObject),
+        values: Object.values(this.propObject),
       }
     } else {
       console.warn('No classification result found.');
