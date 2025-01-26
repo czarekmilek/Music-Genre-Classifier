@@ -1,31 +1,33 @@
 <div class="flex items-center justify-center h-full">
   <div
-    class="h-auto w-[70vw] relative rounded-xl bg-[var(--file-card-bg-clr)] p-10 
-           shadow-[0_4px_12px_-1px_rgba(0,0,0,0.15)] backdrop-blur-lg flex flex-col gap-6"
+    class="h-full w-[70vw] relative rounded-xl bg-[var(--file-card-bg-clr)] p-10 shadow-[0_4px_12px_-1px_rgba(0,0,0,0.15)] backdrop-blur-lg flex flex-col gap-6 overflow-auto"
   >
     <div>
-      <h2 class="text-3xl font-semibold text-center 
-                text-[var(--accent-sec-clr)]">
+      <h2
+        class="text-3xl font-semibold text-center text-[var(--accent-sec-clr)]"
+      >
         Genre Prediction Results
       </h2>
       <h3 class="text-xl font-medium text-center">{{ songName }}</h3>
     </div>
-    
+
     <div
-      class="h-auto w-auto relative rounded-xl flex items-center justify-between"
+      class="max-w-full relative rounded-xl flex items-center justify-between flex-wrap"
     >
       <!-- Pie Chart Container -->
-      <div class="flex-grow flex justify-center">
+      <div class="">
         <app-pie-chart
           *ngIf="pieChartData"
           [data]="pieChartData"
         ></app-pie-chart>
       </div>
-      
+
       <!-- Results List -->
       <ng-container *ngIf="propObject; else noResult">
         <div class="flex flex-col gap-4 w-1/4 m-8">
-          <h3 class="text-xl font-medium text-[var(--accent-sec-clr)]">List of predictions</h3>
+          <h3 class="text-xl font-medium text-[var(--accent-sec-clr)]">
+            List of predictions
+          </h3>
           <div *ngFor="let genre of propObject | keyvalue">
             <span class="capitalize font-medium">{{ genre.key }}: </span>
             <span>{{ (genre.value * 100).toFixed(2) }}%</span>
@@ -41,8 +43,7 @@
     </div>
     <div class="flex justify-center mt-6">
       <button
-        class="px-12 py-3 rounded-lg bg-[var(--accent-sec-clr)] text-white 
-               hover:bg-[#37528b] focus:outline-none transition-bg duration-300 ease-in-out "
+        class="px-12 py-3 rounded-lg bg-[var(--accent-sec-clr)] text-white hover:bg-[#37528b] focus:outline-none transition-bg duration-300 ease-in-out"
         (click)="goBack()"
       >
         Go Back

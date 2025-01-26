@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -6,7 +6,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss']
+  styleUrls: ['./pie-chart.component.scss'],
 })
 export class PieChartComponent implements OnInit {
   @Input() data: { labels: string[]; values: number[] } | null = null;
@@ -49,7 +49,6 @@ export class PieChartComponent implements OnInit {
           ],
         },
         options: {
-          responsive: true,
           plugins: {
             legend: {
               display: true,
@@ -58,8 +57,8 @@ export class PieChartComponent implements OnInit {
                 font: {
                   size: 12,
                 },
-              padding: 12,
-              }
+                padding: 12,
+              },
             },
             tooltip: {
               displayColors: false,
@@ -69,9 +68,16 @@ export class PieChartComponent implements OnInit {
                   return (context.parsed * 100).toFixed(2) + '%';
                 },
               },
-            }
+            },
+          },
         },
-      }});
+      });
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (this.chart) {
+      this.chart.resize(); // Wymuszenie odświeżenia rozmiaru
     }
   }
 }
