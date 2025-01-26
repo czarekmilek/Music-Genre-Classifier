@@ -41,8 +41,8 @@ export class PieChartComponent implements OnInit {
                 '#9966FF',
                 '#0074D9',
                 '#FF851B',
-                '#FFD700',
-                '#DC7633',
+                '#A2786F',
+                '#3C7633',
                 '#2ECC40',
               ],
             },
@@ -50,8 +50,28 @@ export class PieChartComponent implements OnInit {
         },
         options: {
           responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                font: {
+                  size: 12,
+                },
+              padding: 12,
+              }
+            },
+            tooltip: {
+              displayColors: false,
+              padding: 8,
+              callbacks: {
+                label: (context) => {
+                  return (context.parsed * 100).toFixed(2) + '%';
+                },
+              },
+            }
         },
-      });
+      }});
     }
   }
 }
