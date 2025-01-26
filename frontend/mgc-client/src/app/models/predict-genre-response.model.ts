@@ -1,4 +1,5 @@
 export interface ProbObject {
+  [genre: string]: number;
   rock: number;
   pop: number;
   blues: number;

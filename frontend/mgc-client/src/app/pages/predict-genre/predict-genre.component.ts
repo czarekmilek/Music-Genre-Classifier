@@ -42,6 +42,7 @@ export class PredictGenreComponent {
           this.probObject = response;
           this.uploadProgress = 0;
           this.probObjectService.setProbObject(this.probObject);
+          this.probObjectService.setFileName(file.name);
           this.router.navigate(['/result-view']);
           this.isLoading.set(false);
         }
