@@ -3,6 +3,7 @@ import { ProbObjectService } from '../../services/prob-object.service';
 import { ProbObject } from '../../models/predict-genre-response.model';
 import { CommonModule } from '@angular/common';
 import { PieChartComponent } from "../../components/pie-chart/pie-chart.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-result-view',
@@ -17,7 +18,9 @@ export class ResultViewComponent {
   pieChartData: { labels: string[]; values: number[] } | null = null;
   songName: string | null = null;
 
-  constructor(private probObjectService: ProbObjectService) {}
+  constructor(
+    private probObjectService: ProbObjectService,
+    private router: Router) {}
 
   ngOnInit() {
     this.propObject = this.probObjectService.getProbObject();
@@ -33,5 +36,9 @@ export class ResultViewComponent {
     } else {
       console.warn('No classification result found.');
     }
+  }
+
+  goBack() {
+    this.router.navigate(['/predict-genre']);
   }
 }
