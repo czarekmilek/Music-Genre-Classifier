@@ -13,7 +13,6 @@ def xgboost_classify(df_music: pd.DataFrame, category: str, verbose=0):
         learning_rate=0.1,
         max_depth=6,
         random_state=42,
-        use_label_encoder=False,
         eval_metric='logloss'
     )
     xgb.fit(X_train, y_train)
@@ -38,7 +37,7 @@ def xgboost_classify(df_music: pd.DataFrame, category: str, verbose=0):
         print(f"Recall: {recall:.4f}")
         print(f"Precision: {precision:.4f}")
 
-    return accuracy, y_prob, y_test
+    return y_prob, y_test
 
 if __name__ == "__main__":
     df = pd.read_csv('M:/Projects/Music-Genre-Classifier/backend/data/processed/music_features_binary_genres.csv')

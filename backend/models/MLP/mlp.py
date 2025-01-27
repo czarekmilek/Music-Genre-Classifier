@@ -40,7 +40,7 @@ def mlp_classify(df_music: pd.DataFrame, category: str, verbose=0):
         print(f"Recall: {recall:.4f}")
         print(f"Precision: {precision:.4f}")
 
-    return accuracy, y_prob, y_test
+    return y_prob, y_test
 
 if __name__ == "__main__":
     # Load dataset

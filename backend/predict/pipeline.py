@@ -17,8 +17,8 @@ from .logictic_regression_predict import train_logistic_regression
 from scripts.extract_features import extract_audio_features
 from .create_log import log_classification_results
 from scripts.config import DATAFRAME_PATH
-
-
+from models.XgBoost.xgboost import xgboost_classify
+from models.MLP.mlp import mlp_classify
 
 
 # RUN AS MODULE python -m predict.logictic_regression_predict
@@ -28,8 +28,8 @@ class Pipeline:
     #, 'pop', 'classical', 'blues', 'hip-hop', 'reggae', 'country', 'metal', 'techno', 'jazz'
     def __init__(self, df_music):
         self.CATEGORIES = ['rock', 'pop', 'classical', 'blues', 'hip-hop', 'reggae', 'country', 'metal', 'techno', 'jazz']
-        self.MODELS_NAMES = ["knn", "lr", "nb", "rf", "svm"] # arrays used for models loading
-        self.MODELS_FUN = [knn_classify, logistic_regression_classifier, naive_bayes_classify, random_forest_classify, svm_classify]
+        self.MODELS_NAMES = ["knn", "lr", "nb", "rf", "svm", "xgboost", "mlp"] # arrays used for models loading
+        self.MODELS_FUN = [knn_classify, logistic_regression_classifier, naive_bayes_classify, random_forest_classify, svm_classify, xgboost_classify, mlp_classify ]
         
         self.df_music = df_music
         # dictionary of models
@@ -72,7 +72,7 @@ class Pipeline:
         # here we run models for each category and save them to reuse
         for model_fun in self.MODELS_FUN:
             
-            probabilities, y = model_fun(self.df_music, category)
+            probabilities, y = model_fun(self.df_music, category, verbose=1)
             
             # build vector of probabilities, value being =1
             songs_probs_matrix.append(probabilities[:, 1])
