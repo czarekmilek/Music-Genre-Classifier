@@ -23,7 +23,7 @@ from pathlib import Path
 # RUN AS MODULE python -m predict.logictic_regression_predict
 
 
-def train_logistic_regression(X, y, category, verbose=0):
+def train_logistic_regression(X, y, category, model_names, verbose=0):
     
     # print(self.X.shape)
 
@@ -54,9 +54,8 @@ def train_logistic_regression(X, y, category, verbose=0):
     dump(model, f'{PATH_TO_LAST_STEP_MODELS}/categorized_regression/{category}.joblib')
 
     if verbose:
-
         coef_importance = pd.DataFrame({
-            'feature': [f'feature_{i}' for i in range(len(model.coef_[0]))],
+            'feature': [model_names[i] for i in range(len(model.coef_[0]))],
             'importance': abs(model.coef_[0])
         }).sort_values('importance', ascending=False)
 

@@ -56,7 +56,7 @@ class Pipeline:
             # print(self.models["rock"]["feature_matrix"].shape)
             # print("last step logistic regression trained on: ", X.shape)
             # add verbose=1 for logging
-            train_logistic_regression(X, y, category, verbose=1)
+            train_logistic_regression(X, y, category, model_names=self.MODELS_NAMES, verbose=1)
      
 
 
