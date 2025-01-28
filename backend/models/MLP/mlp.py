@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import classification_report, accuracy_score, f1_score, recall_score, precision_score
 import pandas as pd
-from scripts.model_scripts import prepare_model_data, save_model
+from scripts.model_scripts import prepare_model_data, save_model, log_evaluation_model_results
 
 def mlp_classify(df_music: pd.DataFrame, category: str, verbose=0):
     X_train, X_test, y_train, y_test, scaler = prepare_model_data(df_music, category)
@@ -32,13 +32,8 @@ def mlp_classify(df_music: pd.DataFrame, category: str, verbose=0):
     precision = precision_score(y_test, y_pred, average='macro')
 
     if verbose:
-        print("\nClassification Report:")
-        print(classification_report(y_test, y_pred))
-        print("\nModel Performance:")
-        print(f"Accuracy: {accuracy:.4f}")
-        print(f"F1 Score: {f1:.4f}")
-        print(f"Recall: {recall:.4f}")
-        print(f"Precision: {precision:.4f}")
+        log_evaluation_model_results(y_test, y_pred, y_prob, 'mlp', category)
+
 
     return y_prob, y_test
 

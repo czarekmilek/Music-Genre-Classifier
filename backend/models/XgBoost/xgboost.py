@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
 import pandas as pd
 from xgboost import XGBClassifier
-from scripts.model_scripts import prepare_model_data, save_model
+from scripts.model_scripts import prepare_model_data, save_model, log_evaluation_model_results
 
 def xgboost_classify(df_music: pd.DataFrame, category: str, verbose=0):
     X_train, X_test, y_train, y_test, scaler = prepare_model_data(df_music, category)
@@ -29,13 +29,7 @@ def xgboost_classify(df_music: pd.DataFrame, category: str, verbose=0):
     precision = precision_score(y_test, y_pred, average='macro')
 
     if verbose:
-        print("\nClassification Report:")
-        print(classification_report(y_test, y_pred))
-        print("\nModel Performance:")
-        print(f"Accuracy: {accuracy:.4f}")
-        print(f"F1 Score: {f1:.4f}")
-        print(f"Recall: {recall:.4f}")
-        print(f"Precision: {precision:.4f}")
+        log_evaluation_model_results(y_test, y_pred, y_prob, 'xgboost', category)
 
     return y_prob, y_test
 
