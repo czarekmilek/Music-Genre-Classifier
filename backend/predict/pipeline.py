@@ -74,7 +74,7 @@ class Pipeline:
             
             probabilities, y = model_fun(self.df_music, category, verbose=1)
             
-            # build vector of probabilities, value being =1
+            # build a vector of probabilities, of each song being of category=category (from function arg)
             songs_probs_matrix.append(probabilities[:, 1])
         # each model uses the same sample to calcualte test, so y labels are the same
         return np.column_stack(songs_probs_matrix), y.values
