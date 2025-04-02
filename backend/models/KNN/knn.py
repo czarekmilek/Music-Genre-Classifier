@@ -17,8 +17,8 @@ def knn_classify(df_music: pd.DataFrame, category:str,  n_neighbors=7, verbose=0
     y_pred = knn.predict(X_test)
     y_prob = knn.predict_proba(X_test)
 
-    # print("probabilities: ", y_prob[1])
-    # print("label: ", y_pred[1])
+    # print("probabilities: ", y_prob)
+    # print("label: ", y_test)
     
 
     save_model(model=knn, mode_name='knn', category=category, scaler=scaler)
@@ -33,8 +33,8 @@ def knn_classify(df_music: pd.DataFrame, category:str,  n_neighbors=7, verbose=0
 if __name__ == "__main__":
     # run as module  python -m models.KNN.knn
     # Load the dataset
-    df = pd.read_csv('/Users/szymon/Documents/projekciki/Music-Genre-Classifier/data/processed/music_features_binary_genres.csv')
+    df = pd.read_csv('/Users/szymon/Documents/projekciki/Music-Genre-Classifier/backend/data/processed/music_features_binary_genres.csv')
     # Run the KNN classifier
-    accuracy, probabilities, y = knn_classify(df,"rock", verbose=1)
+    probabilities, y = knn_classify(df,"rock", verbose=1)
     print("kkn probabilities for each song from the test_set being rock:", probabilities[0])
     print("true label for the probability from above", y[1])

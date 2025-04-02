@@ -61,7 +61,28 @@ To account for the fact that a song may belong to multiple genres, we designed t
 
 # Demo
 
+### Main Page
+![alt text](<Screenshot 2025-04-02 at 12.01.22.png>)
 
+### Sample Predictions
+![alt text](<Screenshot 2025-04-02 at 12.00.15.png>)
+
+
+![alt text](<Screenshot 2025-04-02 at 12.00.45.png>)
+
+![alt text](<Screenshot 2025-04-02 at 12.01.54.png>)
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
+
+![alt text](image-4.png)
+
+![alt text](image-5.png)
 
 ## System Requirements 🛠️
 
@@ -72,7 +93,7 @@ To set up and run this project, ensure that you have the following tools install
 - **Angular CLI** (optional): Version 19.x or newer
 > **Note**: Angular CLI is optional, as the project can be run using `npx` without requiring a global installation of Angular CLI.
 > 
-## SETUP 🚀
+## SETUP Python Backend
 ### Clone repository
 > git clone https://github.com/PT00/Music-Genre-Classifier.git
 
@@ -103,7 +124,7 @@ To set up and run this project, ensure that you have the following tools install
 #### 1.4. Run Local Server
 > uvicorn main:app --reload --host 127.0.0.1 --port 8000
 
-### 2. Angular Frontend
+## SETUP Angular Frontend
 
 #### 2.1. Change directory:
 > cd Music-Genre-Classifier/frontend/mgc-client

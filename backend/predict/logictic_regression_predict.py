@@ -82,20 +82,20 @@ def train_logistic_regression(X, y, category, model_names, verbose=0):
 
 
 
-        # Log metrics with category logger
-        logger.info("Y pred: %s", y_pred)
-        logger.info("Y test: %s", y_test)
-        logger.info("\nFeature Importance by Coefficients:")
-        logger.info(coef_importance)
-        logger.info("Cross Entropy Loss on training set: %f", ce_loss)
-        logger.info("\nClassification Report For Logistic Regression:")
-        logger.info(classification_report(y_test, y_pred))
-        logger.info(f"Accuracy: {accuracy:.4f}")
-        logger.info(f"F1 Score: {f1:.4f}")
-        logger.info(f"Recall: {recall:.4f}")
-        logger.info(f"Precision: {precision:.4f}")
-        logger.info("\nFirst 10 Predicted Probabilities for Class 1:")
-        logger.info(y_prob[:10])
+        # # Log metrics with category logger
+        # logger.info("Y pred: %s", y_pred)
+        # logger.info("Y test: %s", y_test)
+        # logger.info("\nFeature Importance by Coefficients:")
+        # logger.info(coef_importance)
+        # logger.info("Cross Entropy Loss on training set: %f", ce_loss)
+        # logger.info("\nClassification Report For Logistic Regression:")
+        # logger.info(classification_report(y_test, y_pred))
+        # logger.info(f"Accuracy: {accuracy:.4f}")
+        # logger.info(f"F1 Score: {f1:.4f}")
+        # logger.info(f"Recall: {recall:.4f}")
+        # logger.info(f"Precision: {precision:.4f}")
+        # logger.info("\nFirst 10 Predicted Probabilities for Class 1:")
+        # logger.info(y_prob[:10])
 
     return model
 

@@ -11,8 +11,8 @@ from scripts.model_scripts import prepare_model_data, save_model, log_evaluation
 
 def show_first_ten_rows(file_path='../../data/processed/music_features.csv'):
     df = pd.read_csv(file_path)
-    print(df.columns)
-    print(df.head(10))
+    # print(df.columns)
+    # print(df.head(10))
 
 
 def random_forest_classify(df_music: pd.DataFrame, category:str, verbose=0):

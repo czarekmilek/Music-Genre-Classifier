@@ -107,7 +107,7 @@ class Pipeline:
                 
                 # biorę PPB na 1 z każdego modelu, w kolejnych kategoriach
                 probs = model.predict_proba(X_scaled)[:, 1][0]
-                print("probs", probs)
+                # print("probs", probs)
                 song_probs_vector.append(probs)
             
 
